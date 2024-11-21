@@ -1,16 +1,13 @@
 package com.example.hseapp2
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hseapp2.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
     private val adapter = CatAdapter()
 
@@ -36,6 +33,14 @@ class MainActivity : AppCompatActivity() {
             adapter.addCat(Cat(R.drawable.cat12, "Black"))
             adapter.addCat(Cat(R.drawable.cat13, "Baby"))
             adapter.addCat(Cat(R.drawable.cat14, "Multi"))
+            adapter.setOnClickListener(object : CatAdapter.OnClickListener {
+                override fun onClick(position: Int, model: Cat) {
+                    val intent = Intent(this@MainActivity, CatActivity::class.java)
+                    intent.putExtra("cat_name", model.name)
+                    intent.putExtra("cat_image", model.imageId)
+                    startActivity(intent)
+                }
+            })
         }
     }
 }
